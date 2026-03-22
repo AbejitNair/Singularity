@@ -2,12 +2,12 @@
   "name": "Singularity - Focus Timer",
   "short_name": "Singularity",
   "description": "Where spacetime collapses into a point of no return. Pomodoro timer with cosmic rewards.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0a0e27",
   "theme_color": "#8b5cf6",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "./",
   "icons": [
     {
       "src": "icon-192.png",
@@ -28,7 +28,7 @@
       "name": "Start Focus Session",
       "short_name": "Focus",
       "description": "Start a 25-minute focus session",
-      "url": "/?action=start",
+      "url": "./?action=start",
       "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ]
