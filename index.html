@@ -3633,11 +3633,11 @@
             }
             
             container.innerHTML = sessionsToShow.map((session) => {
-                const endDate = new Date(session.date);
-                const startDate = new Date(endDate.getTime() - session.duration * 60000);
+                const startDate = new Date(session.date); // session.date is START time
+                const endDate = new Date(startDate.getTime() + session.duration * 60000); // Calculate END
                 const actualIndex = stats.sessions.indexOf(session);
                 
-                const dateStr = endDate.toLocaleDateString();
+                const dateStr = startDate.toLocaleDateString();
                 const startTime = startDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
                 const endTime = endDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
                 
@@ -4892,10 +4892,10 @@
             document.getElementById('tag-modal-stats').textContent = `${timeStr} (${taggedSessions.length} sessions)`;
             
             const sessionsHTML = taggedSessions.map((session, idx) => {
-                const endDate = new Date(session.date);
-                const startDate = new Date(endDate.getTime() - session.duration * 60000);
+                const startDate = new Date(session.date); // session.date is START time
+                const endDate = new Date(startDate.getTime() + session.duration * 60000); // Calculate END
                 
-                const dateStr = endDate.toLocaleDateString();
+                const dateStr = startDate.toLocaleDateString();
                 const startTime = startDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
                 const endTime = endDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
                 
