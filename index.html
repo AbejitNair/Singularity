@@ -4507,12 +4507,13 @@
 
             stats.sessions.forEach(s => {
                 if (s.type !== 'focus') return;
-                const endTime = new Date(s.date);
-                if (endTime.toDateString() !== targetStr) return;
+                const startTime = new Date(s.date); // session.date is START time
+                const sessionDay = getSessionDay(s); // Use smart detection for which day
+                if (sessionDay !== targetStr) return;
 
-                // Estimate start time by subtracting duration
+                // Calculate end time by adding duration
                 const durationMs = (s.duration || 0) * 60 * 1000;
-                const startTime = new Date(endTime.getTime() - durationMs);
+                const endTime = new Date(startTime.getTime() + durationMs);
 
                 // Spread minutes across hours the session touched
                 let remaining = s.duration;
