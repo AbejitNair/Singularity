@@ -3417,8 +3417,7 @@
                 return;
             }
             input.dataset.confirmed = val;
-            input.value = '';
-            
+            input.value = val;
             showNotification('✅ Set to ' + val + ' min — click Save Settings to apply!', 'success');
         }
 
