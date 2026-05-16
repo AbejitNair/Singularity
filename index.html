@@ -3418,7 +3418,7 @@
             }
             input.dataset.confirmed = val;
             input.value = '';
-            input.placeholder = val + ' min ✓';
+            
             showNotification('✅ Set to ' + val + ' min — click Save Settings to apply!', 'success');
         }
 
@@ -3447,9 +3447,6 @@
                 const inp = document.getElementById(id);
                 delete inp.dataset.confirmed;
             });
-            document.getElementById('focus-duration').placeholder = settings.focusDuration + ' min ✓';
-            document.getElementById('short-break').placeholder = settings.shortBreak + ' min ✓';
-            document.getElementById('long-break').placeholder = settings.longBreak + ' min ✓';
             
             // Update current mode if focus
             if (timerState.mode === 'focus') {
@@ -4571,11 +4568,8 @@
             if (savedSettings) {
                 settings = JSON.parse(savedSettings);
                 document.getElementById('focus-duration').value = '';
-                document.getElementById('focus-duration').placeholder = settings.focusDuration + ' min ✓';
                 document.getElementById('short-break').value = '';
-                document.getElementById('short-break').placeholder = settings.shortBreak + ' min ✓';
                 document.getElementById('long-break').value = '';
-                document.getElementById('long-break').placeholder = settings.longBreak + ' min ✓';
                 document.getElementById('sessions-before-long').value = settings.sessionsBeforeLong;
                 document.getElementById('cooldown-message-setting').value = settings.cooldownMessage || 'Are you sure you want to break your focus? Pause and reflect. Before you go... Ask yourself: What would the person you aspire to be do right now?';
                 document.getElementById('cooldown-duration').value = settings.cooldownDuration || 10;
