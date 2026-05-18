@@ -355,7 +355,11 @@
             border: 2px solid var(--cosmos-light);
             border-radius: 16px;
             padding: 2rem;
-            max-height: 600px;
+            overflow: visible;
+        }
+
+        .todo-list {
+            max-height: 460px;
             overflow-y: auto;
         }
 
@@ -1314,6 +1318,9 @@
             /* Todo list - prevent horizontal scroll */
             .todo-container {
                 padding: 1.5rem 1rem;
+            }
+
+            .todo-list {
                 overflow-x: hidden;
             }
             
