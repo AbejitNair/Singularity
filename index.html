@@ -1037,9 +1037,11 @@
 
         .rewards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .reward-item {
@@ -1416,13 +1418,41 @@
             
             /* Rewards */
             .rewards-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
-                padding: 0 1rem;
+                padding: 0;
+            }
+
+            .rewards-container {
+                padding: 1.25rem;
+                overflow-x: hidden;
+            }
+
+            .reward-item {
+                padding: 0.75rem;
+                min-width: 0;
+            }
+
+            .reward-icon {
+                font-size: 2rem;
             }
             
             .reward-card {
                 padding: 1.5rem;
+            }
+
+            /* Controls card (session tags) landscape fix */
+            .controls-card {
+                padding: 1.25rem 1rem;
+                overflow-x: hidden;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+
+            #preset-tags-container {
+                flex-wrap: wrap;
+                max-width: 100%;
+                overflow-x: hidden;
             }
             
             /* Session history */
@@ -1562,6 +1592,43 @@
             
             .fullscreen-display {
                 font-size: 3rem;
+            }
+        }
+        /* Landscape phones - fix overflow issues */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .timer-card, .controls-card {
+                overflow-x: hidden;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+
+            #preset-tags-container {
+                flex-wrap: wrap;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            .tag-input-group {
+                flex-wrap: wrap;
+            }
+
+            .rewards-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.75rem;
+            }
+
+            .rewards-container {
+                padding: 1rem;
+                overflow-x: hidden;
+            }
+
+            .reward-item {
+                padding: 0.6rem;
+                min-width: 0;
+            }
+
+            .reward-icon {
+                font-size: 1.8rem;
             }
         }
     </style>
