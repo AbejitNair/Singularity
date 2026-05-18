@@ -1666,12 +1666,12 @@
                         </button>
                         <div id="todo-calendar" style="display:none; position:absolute; right:0; top:calc(100% + 8px); z-index:100;
                             background: var(--cosmos-mid); border:2px solid var(--nebula-purple);
-                            border-radius:12px; padding:1rem; min-width:280px;
-                            box-shadow:0 8px 32px rgba(139,92,246,0.4);">
+                            border-radius:12px; padding:1rem; width:min(280px, calc(100vw - 2rem));
+                            box-shadow:0 8px 32px rgba(139,92,246,0.4); box-sizing:border-box;">
                             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
-                                <button onclick="todoCalPrev()" style="background:none;border:none;color:var(--nebula-purple);font-size:1.2rem;cursor:pointer;">‹</button>
-                                <span id="todo-cal-month" style="font-family:'Orbitron',sans-serif;font-size:0.8rem;color:var(--nebula-pink);"></span>
-                                <button onclick="todoCalNext()" style="background:none;border:none;color:var(--nebula-purple);font-size:1.2rem;cursor:pointer;">›</button>
+                                <button onclick="todoCalPrev()" style="background:none;border:none;color:var(--nebula-purple);font-size:1.2rem;cursor:pointer;padding:0.25rem 0.5rem;">‹</button>
+                                <span id="todo-cal-month" style="font-family:'Orbitron',sans-serif;font-size:0.8rem;color:var(--nebula-pink);text-align:center;"></span>
+                                <button onclick="todoCalNext()" style="background:none;border:none;color:var(--nebula-purple);font-size:1.2rem;cursor:pointer;padding:0.25rem 0.5rem;">›</button>
                             </div>
                             <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center; margin-bottom:0.5rem;">
                                 <span style="font-size:0.65rem;opacity:0.5;padding:2px;">Su</span>
@@ -1683,8 +1683,9 @@
                                 <span style="font-size:0.65rem;opacity:0.5;padding:2px;">Sa</span>
                             </div>
                             <div id="todo-cal-days" style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; text-align:center;"></div>
-                            <div style="margin-top:0.75rem; text-align:center;">
-                                <button onclick="clearTodoDateFilter()" style="background:none;border:1px solid var(--cosmos-light);color:var(--star-white);font-family:'Space Mono',monospace;font-size:0.75rem;padding:0.3rem 0.75rem;border-radius:6px;cursor:pointer;">Show All</button>
+                            <div style="margin-top:0.75rem; display:flex; gap:0.5rem;">
+                                <button onclick="goToTodayTodo()" style="flex:1; background:var(--nebula-purple); border:none; color:var(--star-white); font-family:'Space Mono',monospace; font-size:0.75rem; padding:0.4rem 0.5rem; border-radius:6px; cursor:pointer;">Today</button>
+                                <button onclick="clearTodoDateFilter()" style="flex:1; background:var(--cosmos-light); border:none; color:var(--star-white); font-family:'Space Mono',monospace; font-size:0.75rem; padding:0.4rem 0.5rem; border-radius:6px; cursor:pointer;">Show All</button>
                             </div>
                         </div>
                     </div>
@@ -3598,6 +3599,7 @@
             if (cal.style.display === 'none') {
                 cal.style.display = 'block';
                 renderTodoCalendar();
+                setTimeout(fixTodoCalendarPosition, 0);
             } else {
                 cal.style.display = 'none';
             }
@@ -3668,7 +3670,15 @@
             renderTodos();
         }
 
-        // Close calendar on outside click
+        function goToTodayTodo() {
+            const todayStr = new Date().toISOString().slice(0, 10);
+            todoCalViewYear = new Date().getFullYear();
+            todoCalViewMonth = new Date().getMonth();
+            renderTodoCalendar();
+            selectTodoDate(todayStr);
+        }
+
+        // Close calendar on outside click; also fix position if it overflows on mobile
         document.addEventListener('click', function(e) {
             const cal = document.getElementById('todo-calendar');
             const btn = document.getElementById('todo-date-btn');
@@ -3676,6 +3686,22 @@
                 cal.style.display = 'none';
             }
         });
+
+        // Reposition todo calendar so it never overflows the viewport on narrow screens
+        function fixTodoCalendarPosition() {
+            const cal = document.getElementById('todo-calendar');
+            if (!cal || cal.style.display === 'none') return;
+            cal.style.right = '';
+            cal.style.left = '';
+            const rect = cal.getBoundingClientRect();
+            if (rect.left < 8) {
+                cal.style.right = 'auto';
+                cal.style.left = '0';
+            } else if (rect.right > window.innerWidth - 8) {
+                cal.style.left = 'auto';
+                cal.style.right = '0';
+            }
+        }
 
         function toggleTodo(id) {
             const todo = stats.todos.find(t => t.id === id);
