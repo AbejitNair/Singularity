@@ -1,4 +1,4 @@
-const CACHE_NAME = 'singularity-v14';
+const CACHE_NAME = 'singularity-v15';
 const urlsToCache = [
   './',
   './index.html',
